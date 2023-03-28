@@ -71,7 +71,7 @@ input, textarea, button{
 
 .new-form {
   display: grid;
-  grid-template-columns: 60px 250px;
+  grid-template-columns: 90px 250px;
   row-gap: 0.5rem;
 }
 
