@@ -19,6 +19,10 @@ router.get('/profile', controller.show);
 
 router.get('/logout', controller.logout);
 
+// post methods for login and signup
+
+router.post('/new', controller.create);
+
 router.post('/', controller.login);
 
 module.exports = router;

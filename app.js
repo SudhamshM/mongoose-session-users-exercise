@@ -3,6 +3,9 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
 
 const storyRoutes = require('./routes/storyRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -30,6 +33,23 @@ mongoose.connect('mongodb://0.0.0.0:27017/demos',
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(morgan('tiny'));
+app.use(session({
+    secret: 'some-42-r@nd0m-s3cr3t',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {maxAge: 60 * 60 * 1000},
+    store: new MongoStore({mongoUrl: 'mongodb://0.0.0.0:27017/demos'})
+}))
+
+// set up flash msgs after session setup
+app.use(flash());
+
+app.use((req, res, next) =>
+{
+    res.locals.successMsg = req.flash('success');
+    res.locals.errorMsg = req.flash('error');
+    next();
+})
 app.use(methodOverride('_method'));
 
 //set up routes

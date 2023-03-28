@@ -20,3 +20,14 @@
     </nav>
     <div class = "content">
 
+        <% if (errorMsg.length > 0) { %>
+            <% errorMsg.forEach(message => { %>
+                 <div class="error"><%= message %></div>
+            <% }); %>
+        <% } %>
+     
+        <% if (successMsg.length > 0) { %>
+         <% successMsg.forEach(message => { %>
+              <div class="success"><%= message %></div>
+         <% }); %>
+     <% } %>
