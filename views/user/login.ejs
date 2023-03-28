@@ -1,14 +1,12 @@
 <%- include('../partials/header.ejs')%>
 <h1>Login To Your Account</h1>
-<form action = '/stories' method = 'POST' class="new-form">
-    <label for="author">Author</label>
-    <input type="text" id="author" name="author">
+<form action = '/users' method = 'POST' class="new-form">
 
-    <label for="title">Title</label>
-    <input type="text" id="title" name="title">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
 
-    <label for="content">Content</label>
-    <textarea rows="5" id="content" name="content" class = "fixed-width"></textarea>
+    <label for="content">Password</label>
+    <input type="password" name="password" required>
     
     <input type="submit" value="Submit">   
 </form>
