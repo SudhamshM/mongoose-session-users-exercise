@@ -11,4 +11,9 @@ const userSchema = new Schema(
     }
 )
 
+userSchema.methods.compare = function(loginPassword)
+{
+    return this.password === loginPassword;
+}
+
 module.exports = mongoose.model('User', userSchema);

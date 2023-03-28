@@ -18,8 +18,9 @@ app.set('view engine', 'ejs');
 //connect to database
 mongoose.connect('mongodb://0.0.0.0:27017/demos', 
                 {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-.then(()=>{
-    app.listen(port, host, ()=>{
+.then(() => {
+    app.listen(port, host, ()=>
+    {
         console.log('Server is running on port', port);
     });
 })
