@@ -17,13 +17,19 @@ exports.show = (req, res, next) =>
     let id = req.session.user;
     console.log(req.flash());
     User.findById(id)
-    .then((user) => res.render('/users/profile', {user}))
+    .then((user) => res.render('./user/profile', {user}))
     .catch(err => next(err));
 }
 
 exports.logout = (req, res, next) =>
 {
-    res.redirect('/login');
+    req.session.destroy(err =>
+        {
+            if (err)
+                return next(err)
+            else
+                res.redirect('/')
+        })
 }
 
 exports.login = (req, res, next) =>
