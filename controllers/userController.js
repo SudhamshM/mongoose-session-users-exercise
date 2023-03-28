@@ -15,6 +15,13 @@ exports.new = (req, res, next) =>
 exports.show = (req, res, next) =>
 {
     let id = req.session.user;
+    // check if session id exists, otherwise show error unauthorized
+    if (!id)
+    {
+        let err = new Error('No session found. Try creating account or logging in.');
+        err.status = 401;
+        return next(err);
+    }
     console.log(req.flash());
     User.findById(id)
     .then((user) => res.render('./user/profile', {user}))
@@ -23,6 +30,12 @@ exports.show = (req, res, next) =>
 
 exports.logout = (req, res, next) =>
 {
+    if (!req.session.user)
+    {
+        let err = new Error("No session found to log out from. Please log in or sign up.")
+        err.status = 405;
+        return next(err);
+    }
     req.session.destroy(err =>
         {
             if (err)
@@ -74,7 +87,7 @@ exports.create = (req, res, next) =>
     let user = new User(req.body);
     console.log(user);
     user.save()
-    .then(() => res.redirect('/users/profile'))
+    .then(() => res.redirect('/users/login'))
     .catch(err => 
         {
             if (err.name === 'ValidationError')
