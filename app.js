@@ -3,7 +3,9 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+
 const storyRoutes = require('./routes/storyRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 //create app
 const app = express();
@@ -14,8 +16,8 @@ let host = 'localhost';
 app.set('view engine', 'ejs');
 
 //connect to database
-mongoose.connect('mongodb://localhost:27017/demos', 
-                {useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://0.0.0.0:27017/demos', 
+                {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 .then(()=>{
     app.listen(port, host, ()=>{
         console.log('Server is running on port', port);
@@ -35,6 +37,7 @@ app.get('/', (req, res)=>{
 });
 
 app.use('/stories', storyRoutes);
+app.use('/users', userRoutes);
 
 app.use((req, res, next) => {
     let err = new Error('The server cannot locate ' + req.url);
